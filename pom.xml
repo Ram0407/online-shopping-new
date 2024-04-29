@@ -19,20 +19,29 @@
         <module>product-service</module>
         <module>order-service</module>
         <module>inventory-service</module>
+        <module>discovery-server</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
     </properties>
 
-    <dependencyManagement>	<!--Test Containers for Integration Testing-->
-        <dependencies>
+    <dependencyManagement>
+        <dependencies>  <!--Test Containers for Integration Testing-->
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
                 <version>1.19.7</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>    <!--Dependency for Netflix Eureka Discovery Server-->
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
