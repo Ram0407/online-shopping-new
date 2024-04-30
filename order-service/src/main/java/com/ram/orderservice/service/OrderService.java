@@ -21,7 +21,7 @@ import java.util.UUID;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public void placeOrder(OrderRequest orderRequest) {
 
@@ -38,9 +38,9 @@ public class OrderService {
                 .map(OrderLineItems::getSkuCode)
                 .toList();
 
-        //Make a call to Inventory microservice and place order oly if the Product is in stock
-        InventoryResponse[] inventoryResponseArray = webClient.get()
-                .uri("http://localhost:8082/api/v1/inventory",
+        //Make a call to Inventory microservice and place order only if the Product is in stock
+        InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/v1/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodeList).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)  //Response Type
